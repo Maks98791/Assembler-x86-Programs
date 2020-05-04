@@ -4,8 +4,7 @@
 # rejestr %eax - biezacy element
 
 .section .data
-tablica:.long 63,67,34,224,45,75,54,34,44,33,22,11,66,0
-
+tablica:.long 4,21,11,22,33,13,16,3,22,0
 .section .text
 
 .global _start
@@ -24,5 +23,7 @@ movl tablica(,%edi,4), %eax
 addl %eax, %ebx
 jmp start_loop /*powtorzenie petli*/
 loop_exit:
+
+/*wynik przekazywany jako kod powrotu (jesli jest mniejszy niz 255)*/
 movl $1, %eax
 int $0x80
