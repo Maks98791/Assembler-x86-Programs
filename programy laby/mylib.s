@@ -1,3 +1,4 @@
+
 SYSEXIT  = 1
 SYSREAD  = 3
 SYSWRITE = 4
@@ -6,41 +7,9 @@ STDIN = 0
 STDOUT = 1
 EXIT_SUCCESS = 0
 
-.data
-msg: .ascii "Wprowadz napis: "
-msg_len = . -msg
-msg_echo: .ascii "                            "
-msg_echo_len = . -msg_echo
-
 .text
-.global _start
-_start:
 
-# piszemy msg (Wprowadz napis: )
-pushl $msg_len # push second argument
-pushl $msg # push first argument
-call write_func
-addl $8, %esp
-int $0x80# wywołanie przerwania programowego -# wykonanie funcji systemowej
-
-# czytamy string do msg_echo
-pushl $msg_echo_len # push second argument
-pushl $msg_echo # push first argument
-call read_func
-addl $8, %esp
-int $0x80
-
-pushl $msg_echo_len # push second argument
-pushl $msg_echo # push first argument
-call write_func
-addl $8, %esp
-int $0x80
-
-call exit_func
-int $0x80
-
-# ----------------------------- FUNKCJE -------------------------------------
-
+.globl read_func
 .type read_func, @function
 read_func:
 pushl %ebp # zachowaj stary base pointer
@@ -53,6 +22,7 @@ movl %ebp, %esp   # odtwarzamy stary stos
 popl %ebp# odtwarzamy stary %ebp
 ret
 
+.globl write_func
 .type write_func, @function
 write_func:
 pushl %ebp # zachowaj stary base pointer
@@ -65,6 +35,7 @@ movl %ebp, %esp   # odtwarzamy stary stos
 popl %ebp# odtwarzamy stary %ebp
 ret
 
+.globl exit_func
 .type exit_func, @function
 exit_func:
 pushl %ebp # zachowaj stary base pointer

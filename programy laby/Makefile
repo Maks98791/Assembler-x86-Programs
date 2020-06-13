@@ -1,4 +1,4 @@
-all: seek_table_min dodaj2liczby pomnoz2liczby sum_table_elem sum2tables zamiana_na_duze szyfr_cezara ascii_na_hex read_write_exit_func
+all: seek_table_min dodaj2liczby pomnoz2liczby sum_table_elem sum2tables zamiana_na_duze szyfr_cezara ascii_na_hex read_write_exit_func callMyLib
 
 seek_table_min: seek_table_min.o
 	ld seek_table_min.o -o seek_table_min
@@ -54,6 +54,18 @@ read_write_exit_func: read_write_exit_func.o
 
 read_write_exit_func.o: read_write_exit_func.s
 		as read_write_exit_func.s --32 -g -o read_write_exit_func.o -g
+
+mylib: mylib.o
+		ls mylib.o -m elf_i386 -o mylib
+
+mylib.o: mylib.s
+		as mylib.s --32 -g -o mylib.o -g
+
+callMyLib: callMyLib.o
+		ld callMyLib.o -m elf_i386 -o callMyLib
+
+callMyLib.o: callMyLib.s
+		as callMyLib.s --32 -g -o callMyLib.o -g
 
 # make clean - usuwa seek_table_min.o i seek_table_min i inne
 clean:
