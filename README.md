@@ -1,4 +1,4 @@
-# Assembler-x86-programs
+# Assembler-x86-Programs
 Programs in Assembler x86 in AT&T format for learning purposes.
 
 ## programy laby
